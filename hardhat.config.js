@@ -1,6 +1,9 @@
 require("dotenv").config();
 require("@nomicfoundation/hardhat-toolbox");
 
+//import "./tasks/sampleTask";
+require("./scripts/deployTask");
+
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.21",
@@ -18,7 +21,6 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      goerli: process.env.ETHERSCAN_API_KEY,
       polygonMumbai: process.env.POLYGONSCAN_API_KEY,
     },
   },
