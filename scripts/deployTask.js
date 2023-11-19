@@ -1,7 +1,9 @@
 //import { task } from "hardhat/config";
 const { task } = require("hardhat/config");
+//const { ethers } = require("hardhat");
+const { toBigInt } = require("ethers");
 
-async function deploy(contractName, constructorArgs, hre) {
+async function deploy(contractName, constructorArgs, contractPath, hre) {
     constructorArgs = constructorArgs.replace(/'/g, '"')
     var constructorArgs = JSON.parse(constructorArgs);
 
@@ -16,10 +18,23 @@ async function deploy(contractName, constructorArgs, hre) {
         var res = await contract.waitForDeployment();
         await res.deploymentTransaction().wait(10);
 
-        await hre.run("verify:verify", {
-            address: await contract.getAddress(),
-            constructorArguments: constructorArgs,
-        });
+        if (contractPath != '') {
+            console.log('verify with contract parameter');
+
+            await hre.run("verify:verify", {
+                address: await contract.getAddress(),
+                constructorArguments: constructorArgs,
+                contract: contractPath
+            });
+        }
+        else {
+            console.log('verify without contract parameter');
+
+            await hre.run("verify:verify", {
+                address: await contract.getAddress(),
+                constructorArguments: constructorArgs,
+            });
+        }
     }
 
 }
@@ -36,13 +51,14 @@ task("deployContract", "Deploys a specified smart contract")
     //.addParam("contractName", "The smart contract name")
     .addPositionalParam("contractName", "The smart contract name")
     .addPositionalParam("constructorArgs", "An array of the smart contract arguments", "[]")
+    .addPositionalParam("contractPath", "Contract path", "")
     .setAction(async (taskArgs, hre) => {
         //console.log(`${process.env.HARDHAT_NETWORK}`);
         //console.log(`${hre.network.name}`);
         //console.log("taskArgs", taskArgs);
 
         await hre.run("compile");
-        await deploy(taskArgs.contractName, taskArgs.constructorArgs, hre).catch(async (error) => {
+        await deploy(taskArgs.contractName, taskArgs.constructorArgs, taskArgs.contractPath, hre).catch(async (error) => {
             console.error(error);
             process.exitCode = 1;
         });
