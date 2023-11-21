@@ -1,8 +1,7 @@
 require("dotenv").config();
 require("@nomicfoundation/hardhat-toolbox");
 
-//import "./tasks/sampleTask";
-require("./scripts/deployTask");
+require("./scripts/deployContract_Task");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
