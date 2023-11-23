@@ -55,8 +55,16 @@ Contract Parameter: 'contracts/demo/CoiniToken.sol:CoiniToken'
 
   
 
-**Deploy Factoyr Smart Contract**
+**Deploy Factory Smart Contract**
 
 ```Example```
 
     npx hardhat --network mumbai deployContract FactoryERC20Token
+
+  
+
+## Testing FactoryERC20Token:
+
+```Example```
+
+    npx hardhat test .\test\testFactoryERC20.js

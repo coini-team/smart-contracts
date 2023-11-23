@@ -5,7 +5,10 @@ import "../base/ERC20Token.sol";
 
 contract FactoryERC20Token {
 
-    ERC20Token[] public ERC20TokenArray;
+    ERC20Token[] public erc20TokenArray;
+    uint256 public countERC20Token;
+
+    event NewERC20TokenContract(address erc20TokenAddress, uint256 index); 
 
     function CreateNewERC20Token(
         string memory name,
@@ -13,23 +16,25 @@ contract FactoryERC20Token {
         uint256 initialSupply
     ) public {
         ERC20Token erc20Token = new ERC20Token(name, symbol, initialSupply);
-        ERC20TokenArray.push(erc20Token);
+        erc20TokenArray.push(erc20Token);
+        countERC20Token++;
+        emit NewERC20TokenContract(address(erc20Token), erc20TokenArray.length - 1);
     }
 
     function callMint(
-        uint256 _erc20TokenIndex,
+        uint256 index,
         address to,
         uint256 amount
     ) public {
-        ERC20Token(address(ERC20TokenArray[_erc20TokenIndex])).mint(to, amount);
+        ERC20Token(address(erc20TokenArray[index])).mint(to, amount);
     }
 
     function callBalanceOf(
-        uint256 _erc20TokenIndex,
+        uint256 index,
         address account
     ) public view returns (uint256) {
         return
-            ERC20Token(address(ERC20TokenArray[_erc20TokenIndex])).balanceOf(
+            ERC20Token(address(erc20TokenArray[index])).balanceOf(
                 account
             );
     }
@@ -37,11 +42,11 @@ contract FactoryERC20Token {
     //source: https://ethereum.stackexchange.com/questions/103508/is-there-a-way-to-call-a-dynamic-function-name-in-solidity
 
     function dynamicCall(
-        uint256 _erc20TokenIndex,
+        uint256 index,
         bytes calldata _data
     ) public returns (bytes memory) {
         (bool success, bytes memory returnData) = address(
-            ERC20TokenArray[_erc20TokenIndex]
+            erc20TokenArray[index]
         ).call(_data);
         require(success);
         return returnData;
