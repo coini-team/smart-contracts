@@ -15,6 +15,8 @@ contract ERC721Token is ERC721, ERC721Enumerable, ERC721Pausable, AccessControl,
         ERC721(name, symbol)
     {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PAUSER_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
     }
 
     function pause() public onlyRole(PAUSER_ROLE) {

@@ -1,21 +1,26 @@
-//SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
 import "../base/ERC721Token.sol";
 
 contract FactoryERC721 {
-   ERC721[] public ERC721Array;
 
-   function CreateNewContract(string memory name, string memory symbol) public {
-     ERC721 newContract = new ERC721(name,symbol);
-     ERC721Array.push(newContract);
+   ERC721[] public ERC721Array;
+   uint256 public amountOfContracts;
+   event NewContract(address contractAddress);
+
+   function createNewContract(string memory name, string memory symbol) public {
+     ERC721Token newERC721 = new ERC721Token(name,symbol);
+     ERC721Array.push(newERC721);
+     amountOfContracts++;
+     emit NewContract(address(newERC721));
    }
 
    function factoryMinter(uint256 _contractIndex, address _to, uint256 _tokenId) public {
-     ERC721(address(ERC721Array[_contractIndex])).safeMint(_to,_tokenId);
+     ERC721Token(address(ERC721Array[_contractIndex])).safeMint(_to,_tokenId);
    }
 
    function factoryOwnerOf(uint256 _contractIndex, uint256 _tokenId) public view returns (address) {
-    return ERC721(address(ERC721Array[_contractIndex])).ownerOf(_tokenId);
+    return ERC721Token(address(ERC721Array[_contractIndex])).ownerOf(_tokenId);
    }
 }
