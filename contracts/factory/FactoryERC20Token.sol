@@ -39,6 +39,13 @@ contract FactoryERC20Token {
             );
     }
 
+    /**
+     * public functions
+     */
+    function getAllContracts () public view returns (ERC20Token[] memory) {
+        return erc20TokenArray;
+    }
+
     //source: https://ethereum.stackexchange.com/questions/103508/is-there-a-way-to-call-a-dynamic-function-name-in-solidity
 
     function dynamicCall(

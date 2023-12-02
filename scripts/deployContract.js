@@ -1,6 +1,4 @@
-//import { task } from "hardhat/config";
 const { task } = require("hardhat/config");
-//const { ethers } = require("hardhat");
 const { toBigInt } = require("ethers");
 
 async function deploy(contractName, constructorArgs, contractPath, hre) {
