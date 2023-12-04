@@ -10,9 +10,7 @@ contract CoiniToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor(address pauser, address minter)
-        ERC20("CoiniToken", "CTK")
-    {
+    constructor(address pauser, address minter) ERC20("CoiniToken", "CTK") {
         _mint(msg.sender, 1_000_000 * 10 ** decimals());
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -34,11 +32,11 @@ contract CoiniToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
 
     // The following functions are overrides required by Solidity.
 
-    function _update(address from, address to, uint256 value)
-        internal
-        override(ERC20, ERC20Pausable)
-    {
+    function _update(
+        address from,
+        address to,
+        uint256 value
+    ) internal override(ERC20, ERC20Pausable) {
         super._update(from, to, value);
     }
-
 }
