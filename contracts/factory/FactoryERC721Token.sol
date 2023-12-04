@@ -7,6 +7,7 @@ contract FactoryERC721 {
     ERC721[] public ERC721Array;
     uint256 public amountOfContracts;
     event NewContract(address contractAddress);
+    event NewNftMinted(uint256 contractIndex, address owner, uint256 tokenId);
 
     function createNewContract(
         string memory name,
@@ -27,6 +28,7 @@ contract FactoryERC721 {
             _to,
             _tokenId
         );
+        emit NewNftMinted(_contractIndex, _to, _tokenId);
     }
 
     function factoryOwnerOf(
