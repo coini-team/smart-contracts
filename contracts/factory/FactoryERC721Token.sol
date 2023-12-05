@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 import "../base/ERC721Token.sol";
 
-contract FactoryERC721 {
+contract FactoryERC721Token {
     ERC721[] public ERC721Array;
     uint256 public amountOfContracts;
     event NewContract(address contractAddress);

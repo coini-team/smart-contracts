@@ -70,8 +70,8 @@ npx hardhat --network mumbai deployContract FactoryERC721Token
 
 ## Testing FactoryERC20Token:
 
-```Example```
+```Run all test into test folder```
 
 ```
-npx hardhat test .\test\testFactoryERC20.js
+yarn test
 ```
