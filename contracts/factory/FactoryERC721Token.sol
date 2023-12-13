@@ -11,9 +11,10 @@ contract FactoryERC721 {
 
     function createNewContract(
         string memory name,
-        string memory symbol
+        string memory symbol,
+        string memory baseURI
     ) public {
-        ERC721Token newERC721 = new ERC721Token(name, symbol);
+        ERC721Token newERC721 = new ERC721Token(name, symbol,baseURI);
         ERC721Array.push(newERC721);
         amountOfContracts++;
         emit NewContract(address(newERC721));
